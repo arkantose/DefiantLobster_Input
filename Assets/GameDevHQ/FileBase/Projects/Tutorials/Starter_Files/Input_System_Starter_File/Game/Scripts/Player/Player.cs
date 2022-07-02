@@ -21,7 +21,7 @@ namespace Game.Scripts.Player
         private CinemachineVirtualCamera _followCam;
         [SerializeField]
         private GameObject _model;
-
+        private InputControls _input;
 
         private void OnEnable()
         {
@@ -37,6 +37,9 @@ namespace Game.Scripts.Player
 
         private void Start()
         {
+            InitializeInputs();
+
+            
             _controller = GetComponent<CharacterController>();
 
             if (_controller == null)
@@ -48,18 +51,22 @@ namespace Game.Scripts.Player
                 Debug.Log("Failed to connect the Animator");
         }
 
+
         private void Update()
         {
             if (_canMove == true)
-                CalcutateMovement();
+            CalcutateMovement();
+
 
         }
+
 
         private void CalcutateMovement()
         {
             _playerGrounded = _controller.isGrounded;
-            float h = Input.GetAxisRaw("Horizontal");
-            float v = Input.GetAxisRaw("Vertical");
+            var move = _input.Player.Walk.ReadValue<Vector2>();
+            float h = move.x;
+            float v = move.y;
 
             transform.Rotate(transform.up, h);
 
@@ -80,6 +87,7 @@ namespace Game.Scripts.Player
             _controller.Move(velocity * Time.deltaTime);                      
 
         }
+
 
         private void InteractableZone_onZoneInteractionComplete(InteractableZone zone)
         {
@@ -129,6 +137,11 @@ namespace Game.Scripts.Player
             Drone.onExitFlightmode -= ReturnPlayerControl;
         }
 
+        void InitializeInputs()
+        {
+            _input = new InputControls();
+            _input.Player.Enable();
+        }
     }
 }
 
