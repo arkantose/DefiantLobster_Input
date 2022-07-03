@@ -39,11 +39,17 @@ namespace Game.Scripts.LiveObjects
         [SerializeField]
         private Sprite _inventoryIcon;
         [SerializeField]
-        private KeyCode _zoneKeyInput;
+        private string _zoneKeyInput;
         [SerializeField]
         private KeyState _keyState;
         [SerializeField]
         private GameObject _marker;
+        //Input controlls 
+        private InputControls _input;
+        private bool _keyIsPressed = false;
+        private bool _actionIsPerformed = false;
+        private bool _holdIsPerformed = false;
+        private bool _collectingIsPerformed = false;
 
         private bool _inHoldState = false;
 
@@ -68,8 +74,56 @@ namespace Game.Scripts.LiveObjects
 
         private void OnEnable()
         {
+            InitializeInputs();
             InteractableZone.onZoneInteractionComplete += SetMarker;
 
+        }
+        void InitializeInputs()
+        {
+            _input = new InputControls();
+            _input.Player.Enable();
+            _input.Player.Pickup.performed += Pickup_performed;
+            _input.Player.Pickup.canceled += Pickup_canceled;
+            _input.Player.Action.performed += Action_performed;
+            _input.Player.Action.canceled += Action_canceled;
+            _input.Player.HoldKey.performed += HoldKey_performed;
+            _input.Player.HoldKey.canceled += HoldKey_canceled;
+        }
+
+        private void HoldKey_canceled(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        {
+            _holdIsPerformed = false;
+            _keyIsPressed = false;
+        }
+
+        private void HoldKey_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        {
+            _holdIsPerformed = true;
+            _keyIsPressed = true;
+        }
+
+        private void Action_canceled(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        {
+            _actionIsPerformed = false;
+            _keyIsPressed = false;
+        }
+
+        private void Action_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        {
+            _actionIsPerformed = true;
+            _keyIsPressed = true;
+        }
+
+        private void Pickup_canceled(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        {
+            _collectingIsPerformed = false;
+            _keyIsPressed = false;
+        }
+
+        private void Pickup_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        {
+            _collectingIsPerformed = true;
+            _keyIsPressed = true;
         }
 
         private void OnTriggerEnter(Collider other)
@@ -122,16 +176,17 @@ namespace Game.Scripts.LiveObjects
 
         private void Update()
         {
+            
             if (_inZone == true)
             {
-
-                if (Input.GetKeyDown(_zoneKeyInput) && _keyState != KeyState.PressHold)
+                //(Input.GetKeyDown(_zoneKeyInput)
+                if (_keyIsPressed == true && _keyState != KeyState.PressHold)
                 {
                     //press
                     switch (_zoneType)
                     {
                         case ZoneType.Collectable:
-                            if (_itemsCollected == false)
+                            if (_itemsCollected == false && _collectingIsPerformed == true)
                             {
                                 CollectItems();
                                 _itemsCollected = true;
@@ -140,7 +195,7 @@ namespace Game.Scripts.LiveObjects
                             break;
 
                         case ZoneType.Action:
-                            if (_actionPerformed == false)
+                            if (_actionPerformed == false && _actionIsPerformed == true)
                             {
                                 PerformAction();
                                 _actionPerformed = true;
@@ -149,7 +204,8 @@ namespace Game.Scripts.LiveObjects
                             break;
                     }
                 }
-                else if (Input.GetKey(_zoneKeyInput) && _keyState == KeyState.PressHold && _inHoldState == false)
+                //(Input.GetKeyDown(_zoneKeyInput)
+                else if (_keyIsPressed == true && _keyState == KeyState.PressHold && _inHoldState == false && _holdIsPerformed == true)
                 {
                     _inHoldState = true;
 
@@ -162,8 +218,8 @@ namespace Game.Scripts.LiveObjects
                             break;           
                     }
                 }
-
-                if (Input.GetKeyUp(_zoneKeyInput) && _keyState == KeyState.PressHold)
+                //Input.GetKeyUp(_zoneKeyInput)
+                if (_keyIsPressed == false && _keyState == KeyState.PressHold && _holdIsPerformed == false)
                 {
                     _inHoldState = false;
                     onHoldEnded?.Invoke(_zoneID);
