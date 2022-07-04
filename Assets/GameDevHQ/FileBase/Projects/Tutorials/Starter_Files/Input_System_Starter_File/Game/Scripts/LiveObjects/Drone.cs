@@ -25,20 +25,27 @@ namespace Game.Scripts.LiveObjects
         private CinemachineVirtualCamera _droneCam;
         [SerializeField]
         private InteractableZone _interactableZone;
-        
+        private InputControls _input;
+        private bool _ascendIsPressed = false;
+        private bool _descendIsPressed = false;
+        private bool _escapeIsPressed = false;
 
         public static event Action OnEnterFlightMode;
         public static event Action onExitFlightmode;
 
         private void OnEnable()
         {
+           
             InteractableZone.onZoneInteractionComplete += EnterFlightMode;
+            InitializeInputs();
         }
+ 
 
         private void EnterFlightMode(InteractableZone zone)
         {
             if (_inFlightMode != true && zone.GetZoneID() == 4) // drone Scene
             {
+                Debug.Log("hI there");
                 _propAnim.SetTrigger("StartProps");
                 _droneCam.Priority = 11;
                 _inFlightMode = true;
@@ -62,11 +69,13 @@ namespace Game.Scripts.LiveObjects
                 CalculateTilt();
                 CalculateMovementUpdate();
 
-                if (Input.GetKeyDown(KeyCode.Escape))
+                if (_escapeIsPressed == true)
                 {
                     _inFlightMode = false;
                     onExitFlightmode?.Invoke();
                     ExitFlightMode();
+                    _input.Drone.Disable();
+                    _input.Player.Enable();
                 }
             }
         }
@@ -80,7 +89,7 @@ namespace Game.Scripts.LiveObjects
 
         private void CalculateMovementUpdate()
         {
-            if (Input.GetKey(KeyCode.LeftArrow))
+            /*if (Input.GetKey(KeyCode.LeftArrow))
             {
                 var tempRot = transform.localRotation.eulerAngles;
                 tempRot.y -= _speed / 3;
@@ -91,17 +100,22 @@ namespace Game.Scripts.LiveObjects
                 var tempRot = transform.localRotation.eulerAngles;
                 tempRot.y += _speed / 3;
                 transform.localRotation = Quaternion.Euler(tempRot);
-            }
+            }*/
+
+                var move = _input.Drone.FlyRot.ReadValue<Vector2>();
+                var tempRot = transform.localRotation.eulerAngles;
+                tempRot.y += (0.1f * 3) * move.x;
+                transform.localRotation = Quaternion.Euler(tempRot);
         }
 
         private void CalculateMovementFixedUpdate()
         {
             
-            if (Input.GetKey(KeyCode.Space))
+            if (_ascendIsPressed == true)
             {
                 _rigidbody.AddForce(transform.up * _speed, ForceMode.Acceleration);
             }
-            if (Input.GetKey(KeyCode.V))
+            if (_descendIsPressed == true)
             {
                 _rigidbody.AddForce(-transform.up * _speed, ForceMode.Acceleration);
             }
@@ -109,21 +123,72 @@ namespace Game.Scripts.LiveObjects
 
         private void CalculateTilt()
         {
-            if (Input.GetKey(KeyCode.A)) 
-                transform.rotation = Quaternion.Euler(00, transform.localRotation.eulerAngles.y, 30);
-            else if (Input.GetKey(KeyCode.D))
-                transform.rotation = Quaternion.Euler(0, transform.localRotation.eulerAngles.y, -30);
-            else if (Input.GetKey(KeyCode.W))
-                transform.rotation = Quaternion.Euler(30, transform.localRotation.eulerAngles.y, 0);
-            else if (Input.GetKey(KeyCode.S))
-                transform.rotation = Quaternion.Euler(-30, transform.localRotation.eulerAngles.y, 0);
-            else 
-                transform.rotation = Quaternion.Euler(0, transform.localRotation.eulerAngles.y, 0);
+
+            /* if (Input.GetKey(KeyCode.A)) 
+                 transform.rotation = Quaternion.Euler(00, transform.localRotation.eulerAngles.y, 30);
+             else if (Input.GetKey(KeyCode.D))
+                 transform.rotation = Quaternion.Euler(0, transform.localRotation.eulerAngles.y, -30);
+             else if (Input.GetKey(KeyCode.W))
+                 transform.rotation = Quaternion.Euler(30, transform.localRotation.eulerAngles.y, 0);
+             else if (Input.GetKey(KeyCode.S))
+                 transform.rotation = Quaternion.Euler(-30, transform.localRotation.eulerAngles.y, 0);
+             else 
+                 transform.rotation = Quaternion.Euler(0, transform.localRotation.eulerAngles.y, 0);
+            */
+            var move = _input.Drone.FlyTilt.ReadValue<Vector2>();
+            transform.rotation = Quaternion.Euler(move.y *30, transform.localRotation.eulerAngles.y, (move.x *30) *-1);
+
         }
 
         private void OnDisable()
         {
             InteractableZone.onZoneInteractionComplete -= EnterFlightMode;
         }
+
+        void InitializeInputs()
+        {
+            
+            _input = new InputControls();
+            _input.Player.Disable();
+            _input.Drone.Enable();
+            _input.Drone.Ascend.performed += Ascend_performed;
+            _input.Drone.Descend.performed += Descend_performed;
+            _input.Drone.Ascend.canceled += Ascend_canceled;
+            _input.Drone.Descend.canceled += Descend_canceled;
+            _input.Drone.Escape.performed += Escape_performed;
+            _input.Drone.Escape.canceled += Escape_canceled;
+
+        }
+
+        private void Escape_canceled(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        {
+            _escapeIsPressed = false;
+        }
+
+        private void Escape_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        {
+            _escapeIsPressed = true;
+        }
+
+        private void Descend_canceled(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        {
+            _descendIsPressed = false;
+        }
+
+        private void Ascend_canceled(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        {
+            _ascendIsPressed = false;
+        }
+
+        private void Descend_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        {
+            _descendIsPressed = true;
+        }
+
+        private void Ascend_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        {
+            _ascendIsPressed = true;
+        }
     }
+
 }

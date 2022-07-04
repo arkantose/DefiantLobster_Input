@@ -11405,7 +11405,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 4.3905974e+12, z: 4.5904e-41, w: 1.536e-42}
+  m_BoundingSphereOverride: {x: 2.0865944e-10, y: 4.515206e+27, z: 7.22507e+28, w: 701.8036}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
@@ -15907,7 +15907,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 972744894}
-  m_LocalRotation: {x: 0.22150686, y: 0.046706494, z: -0.010622181, w: 0.97398174}
+  m_LocalRotation: {x: 0.22150686, y: 0.04670532, z: -0.010621911, w: 0.9739818}
   m_LocalPosition: {x: -0.48177326, y: 4.5286655, z: -4.833789}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -31174,7 +31174,7 @@ MonoBehaviour:
   _displayMessage: Fly Drone
   _zoneItems: []
   _inventoryIcon: {fileID: 0}
-  _zoneKeyInput: E
+  _zoneKeyInput: Space
   _keyState: 0
   _marker: {fileID: 1041737524}
 --- !u!1001 &1810757429
@@ -31293,7 +31293,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: c14085171003ee2478ef40ebd5fcbee8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 9.9247
+      value: 12.47
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: c14085171003ee2478ef40ebd5fcbee8, type: 3}
       propertyPath: m_LocalRotation.w

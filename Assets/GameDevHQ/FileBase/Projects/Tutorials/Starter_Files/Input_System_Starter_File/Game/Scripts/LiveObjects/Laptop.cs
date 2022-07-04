@@ -19,6 +19,10 @@ namespace Game.Scripts.LiveObjects
         private int _activeCamera = 0;
         [SerializeField]
         private InteractableZone _interactableZone;
+        private InputControls _input;
+        private bool _actionKeyPressed = false;
+        private bool _exitKeyPressed = false;
+        private int _keyIsPressed = 0;
 
         public static event Action onHackComplete;
         public static event Action onHackEnded;
@@ -27,14 +31,16 @@ namespace Game.Scripts.LiveObjects
         {
             InteractableZone.onHoldStarted += InteractableZone_onHoldStarted;
             InteractableZone.onHoldEnded += InteractableZone_onHoldEnded;
+            InitializeInputs();
         }
 
         private void Update()
         {
             if (_hacked == true)
             {
-                if (Input.GetKeyDown(KeyCode.E))
+                if (_actionKeyPressed == true && _keyIsPressed == 0)
                 {
+                    _keyIsPressed = 1;
                     var previous = _activeCamera;
                     _activeCamera++;
 
@@ -45,9 +51,10 @@ namespace Game.Scripts.LiveObjects
 
                     _cameras[_activeCamera].Priority = 11;
                     _cameras[previous].Priority = 9;
+                    Invoke("DelayCameraSwitch", 1f);
                 }
 
-                if (Input.GetKeyDown(KeyCode.Escape))
+                if (_exitKeyPressed == true)
                 {
                     _hacked = false;
                     onHackEnded?.Invoke();
@@ -56,6 +63,10 @@ namespace Game.Scripts.LiveObjects
             }
         }
 
+        void DelayCameraSwitch()
+        {
+            _keyIsPressed = 0;
+        }
         void ResetCameras()
         {
             foreach (var cam in _cameras)
@@ -112,6 +123,35 @@ namespace Game.Scripts.LiveObjects
         {
             InteractableZone.onHoldStarted -= InteractableZone_onHoldStarted;
             InteractableZone.onHoldEnded -= InteractableZone_onHoldEnded;
+        }
+        void InitializeInputs()
+        {
+            _input = new InputControls();
+            _input.Player.Enable();
+            _input.Player.Action.performed += Action_performed;
+            _input.Player.Action.canceled += Action_canceled;
+            _input.Player.Exit.performed += Exit_performed;
+            _input.Player.Exit.canceled += Exit_canceled;
+        }
+
+        private void Exit_canceled(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        {
+            _exitKeyPressed = false;
+        }
+
+        private void Exit_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        {
+            _exitKeyPressed = true;
+        }
+
+        private void Action_canceled(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        {
+            _actionKeyPressed = false;
+        }
+
+        private void Action_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        {
+            _actionKeyPressed = true;
         }
     }
 

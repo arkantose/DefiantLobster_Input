@@ -62,6 +62,15 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Hold(duration=1)"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Exit"",
+                    ""type"": ""Button"",
+                    ""id"": ""8810c4ab-16a2-4321-bc63-25d6e41ddf6d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -152,6 +161,213 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
                     ""action"": ""HoldKey"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4021e0f3-02ff-4ea9-bc86-a29a00ff822d"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Exit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Drone"",
+            ""id"": ""a381f34a-1cfc-41e5-af81-69acaa475241"",
+            ""actions"": [
+                {
+                    ""name"": ""FlyTilt"",
+                    ""type"": ""Value"",
+                    ""id"": ""193547f5-a7dd-4027-b986-064897ababf6"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Ascend"",
+                    ""type"": ""Button"",
+                    ""id"": ""74701625-7078-457e-8149-de5b64b1ec26"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Descend"",
+                    ""type"": ""Button"",
+                    ""id"": ""ca83a60f-5033-4fad-91ad-a98907c1a644"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""FlyRot"",
+                    ""type"": ""Value"",
+                    ""id"": ""9599e0c1-24d0-4398-b4f3-c9c13e3716d2"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Escape"",
+                    ""type"": ""Button"",
+                    ""id"": ""22ffec1f-b586-4d18-9075-5a1f5c749267"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""5efee572-07c3-4eca-a07f-5766953625f8"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FlyTilt"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""0cd06ebf-861c-4fd9-8415-fed4491101fc"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FlyTilt"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""252bd4fc-7f1c-477f-a9e8-a0c2e0ea1208"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FlyTilt"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""5d14af81-24f0-4d32-9238-f970987b6c9f"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FlyTilt"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""4e94fe13-8609-4d66-8d0e-ab75a707b834"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FlyTilt"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""168b3941-d964-4379-acd1-91a6f55214fe"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Ascend"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7ca8870a-f49b-48c2-92f1-d6ff99a43b1a"",
+                    ""path"": ""<Keyboard>/v"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Descend"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""9b0680c1-3e7f-4263-bb85-761cfca36cb4"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FlyRot"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""46a3c2cb-6f73-44fc-bdea-8f0ebf205e2b"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FlyRot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""03b1b2c7-0d6f-46d7-9aa1-370b8651144d"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FlyRot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""4898aeda-f3e6-4b6a-bab6-a1414c528c23"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FlyRot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""196b0585-6a98-4c0a-a14f-41f9ef0d32be"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FlyRot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cf16e4df-d9e4-4a6a-aeed-656de6c14edc"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Escape"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -164,6 +380,14 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
         m_Player_Pickup = m_Player.FindAction("Pickup", throwIfNotFound: true);
         m_Player_Action = m_Player.FindAction("Action", throwIfNotFound: true);
         m_Player_HoldKey = m_Player.FindAction("HoldKey", throwIfNotFound: true);
+        m_Player_Exit = m_Player.FindAction("Exit", throwIfNotFound: true);
+        // Drone
+        m_Drone = asset.FindActionMap("Drone", throwIfNotFound: true);
+        m_Drone_FlyTilt = m_Drone.FindAction("FlyTilt", throwIfNotFound: true);
+        m_Drone_Ascend = m_Drone.FindAction("Ascend", throwIfNotFound: true);
+        m_Drone_Descend = m_Drone.FindAction("Descend", throwIfNotFound: true);
+        m_Drone_FlyRot = m_Drone.FindAction("FlyRot", throwIfNotFound: true);
+        m_Drone_Escape = m_Drone.FindAction("Escape", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -227,6 +451,7 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Pickup;
     private readonly InputAction m_Player_Action;
     private readonly InputAction m_Player_HoldKey;
+    private readonly InputAction m_Player_Exit;
     public struct PlayerActions
     {
         private @InputControls m_Wrapper;
@@ -235,6 +460,7 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
         public InputAction @Pickup => m_Wrapper.m_Player_Pickup;
         public InputAction @Action => m_Wrapper.m_Player_Action;
         public InputAction @HoldKey => m_Wrapper.m_Player_HoldKey;
+        public InputAction @Exit => m_Wrapper.m_Player_Exit;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -256,6 +482,9 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
                 @HoldKey.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHoldKey;
                 @HoldKey.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHoldKey;
                 @HoldKey.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHoldKey;
+                @Exit.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnExit;
+                @Exit.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnExit;
+                @Exit.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnExit;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -272,15 +501,92 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
                 @HoldKey.started += instance.OnHoldKey;
                 @HoldKey.performed += instance.OnHoldKey;
                 @HoldKey.canceled += instance.OnHoldKey;
+                @Exit.started += instance.OnExit;
+                @Exit.performed += instance.OnExit;
+                @Exit.canceled += instance.OnExit;
             }
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
+
+    // Drone
+    private readonly InputActionMap m_Drone;
+    private IDroneActions m_DroneActionsCallbackInterface;
+    private readonly InputAction m_Drone_FlyTilt;
+    private readonly InputAction m_Drone_Ascend;
+    private readonly InputAction m_Drone_Descend;
+    private readonly InputAction m_Drone_FlyRot;
+    private readonly InputAction m_Drone_Escape;
+    public struct DroneActions
+    {
+        private @InputControls m_Wrapper;
+        public DroneActions(@InputControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @FlyTilt => m_Wrapper.m_Drone_FlyTilt;
+        public InputAction @Ascend => m_Wrapper.m_Drone_Ascend;
+        public InputAction @Descend => m_Wrapper.m_Drone_Descend;
+        public InputAction @FlyRot => m_Wrapper.m_Drone_FlyRot;
+        public InputAction @Escape => m_Wrapper.m_Drone_Escape;
+        public InputActionMap Get() { return m_Wrapper.m_Drone; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(DroneActions set) { return set.Get(); }
+        public void SetCallbacks(IDroneActions instance)
+        {
+            if (m_Wrapper.m_DroneActionsCallbackInterface != null)
+            {
+                @FlyTilt.started -= m_Wrapper.m_DroneActionsCallbackInterface.OnFlyTilt;
+                @FlyTilt.performed -= m_Wrapper.m_DroneActionsCallbackInterface.OnFlyTilt;
+                @FlyTilt.canceled -= m_Wrapper.m_DroneActionsCallbackInterface.OnFlyTilt;
+                @Ascend.started -= m_Wrapper.m_DroneActionsCallbackInterface.OnAscend;
+                @Ascend.performed -= m_Wrapper.m_DroneActionsCallbackInterface.OnAscend;
+                @Ascend.canceled -= m_Wrapper.m_DroneActionsCallbackInterface.OnAscend;
+                @Descend.started -= m_Wrapper.m_DroneActionsCallbackInterface.OnDescend;
+                @Descend.performed -= m_Wrapper.m_DroneActionsCallbackInterface.OnDescend;
+                @Descend.canceled -= m_Wrapper.m_DroneActionsCallbackInterface.OnDescend;
+                @FlyRot.started -= m_Wrapper.m_DroneActionsCallbackInterface.OnFlyRot;
+                @FlyRot.performed -= m_Wrapper.m_DroneActionsCallbackInterface.OnFlyRot;
+                @FlyRot.canceled -= m_Wrapper.m_DroneActionsCallbackInterface.OnFlyRot;
+                @Escape.started -= m_Wrapper.m_DroneActionsCallbackInterface.OnEscape;
+                @Escape.performed -= m_Wrapper.m_DroneActionsCallbackInterface.OnEscape;
+                @Escape.canceled -= m_Wrapper.m_DroneActionsCallbackInterface.OnEscape;
+            }
+            m_Wrapper.m_DroneActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @FlyTilt.started += instance.OnFlyTilt;
+                @FlyTilt.performed += instance.OnFlyTilt;
+                @FlyTilt.canceled += instance.OnFlyTilt;
+                @Ascend.started += instance.OnAscend;
+                @Ascend.performed += instance.OnAscend;
+                @Ascend.canceled += instance.OnAscend;
+                @Descend.started += instance.OnDescend;
+                @Descend.performed += instance.OnDescend;
+                @Descend.canceled += instance.OnDescend;
+                @FlyRot.started += instance.OnFlyRot;
+                @FlyRot.performed += instance.OnFlyRot;
+                @FlyRot.canceled += instance.OnFlyRot;
+                @Escape.started += instance.OnEscape;
+                @Escape.performed += instance.OnEscape;
+                @Escape.canceled += instance.OnEscape;
+            }
+        }
+    }
+    public DroneActions @Drone => new DroneActions(this);
     public interface IPlayerActions
     {
         void OnWalk(InputAction.CallbackContext context);
         void OnPickup(InputAction.CallbackContext context);
         void OnAction(InputAction.CallbackContext context);
         void OnHoldKey(InputAction.CallbackContext context);
+        void OnExit(InputAction.CallbackContext context);
+    }
+    public interface IDroneActions
+    {
+        void OnFlyTilt(InputAction.CallbackContext context);
+        void OnAscend(InputAction.CallbackContext context);
+        void OnDescend(InputAction.CallbackContext context);
+        void OnFlyRot(InputAction.CallbackContext context);
+        void OnEscape(InputAction.CallbackContext context);
     }
 }
