@@ -19,13 +19,60 @@ namespace Game.Scripts.LiveObjects
         private bool _inDriveMode = false;
         [SerializeField]
         private InteractableZone _interactableZone;
+        private InputControls _input;
+        private bool _liftUp;
+        private bool _liftDown;
+        private bool _exitAction;
 
         public static event Action onDriveModeEntered;
         public static event Action onDriveModeExited;
 
         private void OnEnable()
         {
+            InitializeInputs();
             InteractableZone.onZoneInteractionComplete += EnterDriveMode;
+        }
+        void InitializeInputs()
+        {
+            _input = new InputControls();
+            _input.Player.Disable();
+            _input.ForkLift.Enable();
+            _input.ForkLift.LiftUp.started += LiftUp_started;
+            _input.ForkLift.LiftUp.canceled += LiftUp_canceled;
+            _input.ForkLift.LiftDown.started += LiftDown_started;
+            _input.ForkLift.LiftDown.canceled += LiftDown_canceled;
+            _input.ForkLift.Exit.started += Exit_started;
+            _input.ForkLift.Exit.canceled += Exit_canceled;
+        }
+
+        private void Exit_canceled(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        {
+            _exitAction = false;
+        }
+
+        private void Exit_started(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        {
+            _exitAction = true;
+        }
+
+        private void LiftDown_canceled(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        {
+            _liftDown = false;
+        }
+
+        private void LiftDown_started(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        {
+            _liftDown = true;
+        }
+
+        private void LiftUp_canceled(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        {
+            _liftUp = false;
+        }
+
+        private void LiftUp_started(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        {
+            _liftUp = true;
         }
 
         private void EnterDriveMode(InteractableZone zone)
@@ -55,7 +102,7 @@ namespace Game.Scripts.LiveObjects
             {
                 LiftControls();
                 CalcutateMovement();
-                if (Input.GetKeyDown(KeyCode.Escape))
+                if (_exitAction == true)
                     ExitDriveMode();
             }
 
@@ -63,8 +110,9 @@ namespace Game.Scripts.LiveObjects
 
         private void CalcutateMovement()
         {
-            float h = Input.GetAxisRaw("Horizontal");
-            float v = Input.GetAxisRaw("Vertical");
+            var move = _input.ForkLift.Move.ReadValue<Vector2>();
+            float h = move.x;
+            float v = move.y;
             var direction = new Vector3(0, 0, v);
             var velocity = direction * _speed;
 
@@ -80,9 +128,9 @@ namespace Game.Scripts.LiveObjects
 
         private void LiftControls()
         {
-            if (Input.GetKey(KeyCode.R))
+            if (_liftUp == true)
                 LiftUpRoutine();
-            else if (Input.GetKey(KeyCode.T))
+            else if (_liftDown == true)
                 LiftDownRoutine();
         }
 
@@ -113,6 +161,8 @@ namespace Game.Scripts.LiveObjects
         private void OnDisable()
         {
             InteractableZone.onZoneInteractionComplete -= EnterDriveMode;
+            _input.Player.Enable();
+            _input.ForkLift.Disable();
         }
 
     }
